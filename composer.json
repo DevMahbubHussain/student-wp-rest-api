@@ -1,0 +1,20 @@
+{
+    "name": "mahbub/student-manager",
+    "description": "WordPress Rest API",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+             "Student\\Manager\\": "includes/"
+        },
+        "files": []
+    },
+    "authors": [
+        {
+            "name": "Mahbub",
+            "email": "mahbubhussaincse@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}

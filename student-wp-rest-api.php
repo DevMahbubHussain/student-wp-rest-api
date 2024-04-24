@@ -46,7 +46,7 @@ final class Student_Info
     }
 
     /**
-     * Define the required plugin constants
+     * Defined the required plugin constants
      * 
      * @return void 
      * 
@@ -61,7 +61,7 @@ final class Student_Info
         define('MH_STUDENT_MANAGER_ASSETS', MH_STUDENT_MANAGER_URL . '/assets');
     }
     /**
-     * Initialize the plugin
+     * Initialize the plugin classes
      *
      * @return void
      */
@@ -83,13 +83,8 @@ final class Student_Info
      */
     public function activate()
     {
-        $installed = get_option('mh_student_version_installed');
-
-        if (!$installed) {
-            update_option('mh_student_version_installed', time());
-        }
-
-        update_option('mh_student_version', MH_STUDENT_MANAGER_VERSION);
+        $installer =  new \Student\Manager\Installer();
+        $installer->run();
     }
 }
 
@@ -104,5 +99,4 @@ function student_manager()
 }
 
 // kick-off the plugin
-
 student_manager();

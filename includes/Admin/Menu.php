@@ -7,6 +7,8 @@ namespace Student\Manager\Admin;
  */
 class Menu
 {
+    private $mh_menus;
+    private $students_object;
     public function __construct()
     {
         add_action('admin_menu', [$this, 'admin_menu']);
@@ -15,18 +17,47 @@ class Menu
 
     public function admin_menu()
     {
-        add_menu_page(
+        $parent_slug = 'student-manager';
+        $capability = 'manage_options';
+        $this->mh_menus = add_menu_page(
             __('Studdent Manager', 'student-info'),
-            __('Student Manager', 'student-info'),
-            'manage_options',
-            'student-manager',
+            __('Student Info', 'student-info'),
+            $capability,
+            $parent_slug,
             [$this, 'plugin_page'],
             'dashicons-welcome-learn-more'
         );
+        add_submenu_page($parent_slug, 'student-info', __('Student Info', 'student-info'), $capability, $parent_slug, [$this, 'plugin_page']);
+        add_submenu_page($parent_slug, 'student-manager-students', __('Settings', 'student-info'), $capability, 'student-settings', [$this, 'settings_page']);
+        add_action("load-$this->mh_menus", [$this, 'screen_option']);
     }
+
+    /**
+     * Screen options
+     *
+     * @return void
+     */
+    public function screen_option()
+    {
+        $option = 'per_page';
+        $args   = [
+            'label'   => 'Students',
+            'default' => 3,
+            'option'  => 'students_per_page'
+        ];
+        add_screen_option($option, $args);
+        $this->students_object = new Student_List();
+    }
+
 
     public function plugin_page()
     {
-        echo "I am from Menu callback functions";
+        $student_info = new Student();
+        $student_info->plugin_page_data();
+    }
+
+    public function settings_page()
+    {
+        echo "Plugin Settings Page";
     }
 }

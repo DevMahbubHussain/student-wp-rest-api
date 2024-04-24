@@ -7,7 +7,7 @@
         "psr-4": {
              "Student\\Manager\\": "includes/"
         },
-        "files": []
+        "files": ["includes/functions.php"]
     },
     "authors": [
         {

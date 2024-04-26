@@ -6,13 +6,16 @@ class Admin
 {
     public function __construct()
     {
-        new Admin\Menu();
-        $this->action_dispatch();
+
+        $student = new Admin\Student();
+        $this->action_dispatch($student);
+        new Admin\Menu($student);
     }
 
-    public function action_dispatch()
+    public function action_dispatch($student)
     {
-        $student_info = new Admin\Student();
-        add_action('admin_init', [$student_info, 'form_handler_new_student_info']);
+        // $student_info = new Admin\Student();
+        add_action('admin_init', [$student, 'form_handler_new_student_info']);
+        add_action('admin_post_mh-delete-student-info', [$student, 'mh_student_delete_info']);
     }
 }

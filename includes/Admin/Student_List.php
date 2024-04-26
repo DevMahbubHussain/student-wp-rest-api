@@ -228,8 +228,6 @@ class Student_List extends WP_List_Table
     }
 
     // Add bulk actions
-
-
     // To show bulk action dropdown
     function get_bulk_actions()
     {

@@ -9,8 +9,10 @@ class Menu
 {
     private $mh_menus;
     private $students_object;
-    public function __construct()
+    public $student;
+    public function __construct($student)
     {
+        $this->student = $student;
         add_action('admin_menu', [$this, 'admin_menu']);
     }
 
@@ -24,10 +26,10 @@ class Menu
             __('Student Info', 'student-info'),
             $capability,
             $parent_slug,
-            [$this, 'plugin_page'],
+            [$this->student, 'plugin_page_data'],
             'dashicons-welcome-learn-more'
         );
-        add_submenu_page($parent_slug, 'student-info', __('Student Info', 'student-info'), $capability, $parent_slug, [$this, 'plugin_page']);
+        add_submenu_page($parent_slug, 'student-info', __('Student Info', 'student-info'), $capability, $parent_slug, [$this->student, 'plugin_page_data']);
         add_submenu_page($parent_slug, 'student-manager-students', __('Settings', 'student-info'), $capability, 'student-settings', [$this, 'settings_page']);
         add_action("load-$this->mh_menus", [$this, 'screen_option']);
     }

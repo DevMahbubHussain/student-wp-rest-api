@@ -23,22 +23,40 @@ function mh_insert_student_infos($args = [])
         'created_at' => current_time('mysql'),
     ];
     $data = wp_parse_args($args, $defaults);
-    $format = [
-        '%s',
-        '%s',
-        '%s',
-        '%d',
-        '%s',
-    ];
+    if (isset($data['id'])) {
+        $id = $data['id'];
+        unset($data['id']);
+        $updated = $wpdb->update(
+            $table,
+            $data,
+            ['id' => $id],
+            [
+                '%s',
+                '%s',
+                '%s',
+                '%d',
+                '%s'
+            ],
+            ['%d']
+        );
+        return $updated;
+    } else {
+        $format = [
+            '%s',
+            '%s',
+            '%s',
+            '%d',
+            '%s',
+        ];
 
+        $inserted = $wpdb->insert($table, $data, $format);
 
-    $inserted = $wpdb->insert($table, $data, $format);
+        if (!$inserted) {
+            return new \WP_Error('failed-to-insert', __('Failed to insert data', 'student-info'));
+        }
 
-    if (!$inserted) {
-        return new \WP_Error('failed-to-insert', __('Failed to insert data', 'student-info'));
+        return $wpdb->insert_id;
     }
-
-    return $wpdb->insert_id;
 }
 
 // fetch student data using WP_List class 
@@ -87,4 +105,24 @@ function mh_count_student_info()
     global $wpdb;
     $table = $wpdb->prefix . 'student_infos';
     return (int) $wpdb->get_var("SELECT count(id) from $table");
+}
+
+
+
+
+function mh_get_student_info($id)
+{
+    global $wpdb;
+    return $wpdb->get_row($wpdb->prepare("SELECT * FROM {$wpdb->prefix}student_infos WHERE id = %d", $id));
+}
+
+// delete student single entry 
+function mh_delete_student_info($id)
+{
+    global $wpdb;
+    return $wpdb->delete(
+        $wpdb->prefix . 'student_infos',
+        ['id' => $id],
+        ['%d']
+    );
 }

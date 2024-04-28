@@ -32,6 +32,7 @@ class Menu
         add_submenu_page($parent_slug, 'student-info', __('Student Info', 'student-info'), $capability, $parent_slug, [$this->student, 'plugin_page_data']);
         add_submenu_page($parent_slug, 'student-manager-students', __('Settings', 'student-info'), $capability, 'student-settings', [$this, 'settings_page']);
         add_action("load-$this->mh_menus", [$this, 'screen_option']);
+        add_action('admin_head-' . $this->mh_menus, [$this, 'enqueue_assets']);
     }
 
     /**
@@ -61,5 +62,10 @@ class Menu
     public function settings_page()
     {
         echo "Plugin Settings Page";
+    }
+
+    public function enqueue_assets()
+    {
+        wp_enqueue_style('student-admin-style');
     }
 }

@@ -23,6 +23,8 @@ class Shortcode
      */
     public function render_shortcode($atts, $content = '')
     {
-        return 'Hello from Student Manager Shortcode';
+        wp_enqueue_script('student-manager-script');
+        wp_enqueue_style('student-manager-styles');
+        return '<h2>Hello from Student Manager Shortcode</h2>';
     }
 }

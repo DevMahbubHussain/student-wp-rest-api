@@ -56,7 +56,7 @@ final class Student_Info
     {
         define('MH_STUDENT_MANAGER_VERSION', self::version);
         define('MH_STUDENT_MANAGER_FILE', __FILE__);
-        define('MH_STUDENT_MANAGER__PATH', __DIR__);
+        define('MH_STUDENT_MANAGER_PATH', __DIR__);
         define('MH_STUDENT_MANAGER_URL', plugins_url('', MH_STUDENT_MANAGER_FILE));
         define('MH_STUDENT_MANAGER_ASSETS', MH_STUDENT_MANAGER_URL . '/assets');
     }
@@ -67,7 +67,10 @@ final class Student_Info
      */
     public function init_plugin()
     {
-
+        new \Student\Manager\Assets();
+        if (defined('DOING_AJAX') && DOING_AJAX) {
+            new \Student\Manager\Ajax();
+        }
         if (is_admin()) {
             new Student\Manager\Admin();
         } else {

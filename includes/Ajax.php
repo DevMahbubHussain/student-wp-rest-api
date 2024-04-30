@@ -19,6 +19,7 @@ class Ajax
             ]);
         }
         // do other stufs as like send mail and other activities
+        // wp_mail()
         wp_send_json_success([
             'message' => 'Enquiry has been sent successfully!'
         ]);

@@ -76,6 +76,7 @@ final class Student_Info
         } else {
             new \Student\Manager\Frontend();
         }
+        new \Student\Manager\API();
     }
 
 

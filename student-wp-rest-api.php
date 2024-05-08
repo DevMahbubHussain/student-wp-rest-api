@@ -77,6 +77,9 @@ final class Student_Info
             new \Student\Manager\Frontend();
         }
         new \Student\Manager\API();
+        new \Student\Manager\CPT\CPT();
+        new \Student\Manager\Metabox\Student_Metabox();
+        \Carbon_Fields\Carbon_Fields::boot();
     }
 
 

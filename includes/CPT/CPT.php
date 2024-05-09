@@ -11,7 +11,6 @@ class CPT
         add_action('init', [$this, 'student_manager_tax']);
     }
 
-
     public function student_manager_cpt()
     {
         register_post_type(
@@ -33,7 +32,6 @@ class CPT
             )
         );
     }
-
 
     public function student_manager_tax()
     {
